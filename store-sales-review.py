@@ -31,15 +31,26 @@ def store_sales_review(products, prices, last_week):
 
     # Compute total price average for all products
     total_price_average = reduce(lambda x, y: x + y, prices) / prices_length
-    print(total_price_average)
+    print("Total price average: ", total_price_average)
 
     # Reduce old prices by $5
     new_price_list = list(map(lambda x: x - 5, prices))
-    print(new_price_list)
+    print("Reduced price list: ", new_price_list)
 
     # Compute total revenue generated from products
-    total_revenue = reduce((lambda x, y: x * y), [prices, last_week])
-    print(total_revenue)
+    total_revenue = 0
+    for index, price in enumerate(prices):
+        product_revenue = prices[index] * last_week[index]
+        total_revenue = total_revenue + product_revenue
+    print("Total revenue: ", total_revenue)
+
+    # Calculate the average daily revenue generated from the products
+    average_daily_revenue = round (total_revenue / last_week_length, 2)
+    print("The average daily revenue: ", average_daily_revenue)
+
+    # Find products which are less than $30, based on new prices
+    cheap_products = [products for products, price in zip(products, new_price_list) if price < 30]    
+    print("List of products now less than $30: ", cheap_products)
 
 
 products = ["Sankofa Foods", "Jamestown Coffee", "Bioko Chocolate", "Blue Skies Ice Cream", "Fair Afric Chocolate", "Kawa Moka Coffee", "Aphro Spirit", "Mensado Bissap", "Voltic"]
